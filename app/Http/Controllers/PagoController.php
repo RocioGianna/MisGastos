@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\pago;
+use App\Models\user;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +20,11 @@ class PagoController extends Controller
      */
     public function index()
     {
-        $pagos = Pago::join("categorias", "pagos.categoria_id", "=", "categorias.id")->select("categorias.nombre", "pagos.*")->whereMonth('fecha', '8')->get(); 
+        $user = auth()->user();
+     
+        $pagos = Pago::join("categorias", "pagos.categoria_id", "=", "categorias.id")->select("categorias.nombre", "pagos.*")->where('user_id', auth()->user()->id)->whereMonth('fecha', '8')->get(); 
         
+        //dd($pagos);
         return view('gastos.index')->with('pagos', $pagos);
     }
 

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('form.crear')
+
     <div class="row">
         <form class="col s12" action="{{ route('pagos.store') }}" method="post">
             @csrf
@@ -23,14 +24,6 @@
 
                         <input type="date" name="fecha" class="validate">
                         <label for="fecha">Fecha de pago</label>
-
-                        <select multiple>
-                            <option value="" disabled selected>Choose your option</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
-                          </select>
-                          <label>Materialize Multiple Select</label>
                         
                         <select name="categoria" >
                             <option value="" disabled selected>Selecciona una categoria</option>
