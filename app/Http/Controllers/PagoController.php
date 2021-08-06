@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use App\Models\pago;
 use App\Models\user;
@@ -18,14 +19,19 @@ class PagoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $user = auth()->user();
-     
-        $pagos = Pago::join("categorias", "pagos.categoria_id", "=", "categorias.id")->select("categorias.nombre", "pagos.*")->where('user_id', auth()->user()->id)->whereMonth('fecha', '8')->get(); 
+        $pagos = Pago::join("categorias", "pagos.categoria_id", "=", "categorias.id")
+                            ->select("categorias.nombre", "pagos.*")
+                            ->where('user_id', auth()->user()->id)
+                            ->orderBy('pagos.fecha')
+                            ->get();
+                            
+        $total = Pago::where('user_id', auth()->user()->id)
+                            ->sum('precio');    
         
-        //dd($pagos);
-        return view('gastos.index')->with('pagos', $pagos);
+        return view('gastos.index')->with('pagos', $pagos)->with('total', $total);
     }
 
     /**
@@ -55,11 +61,12 @@ class PagoController extends Controller
         $pago->precio = $request->monto;
         $pago->pagado = $request->pagado;
         $pago->fecha = $request->fecha;
-        $pago->categoria = $request->categoria;
+        $pago->categoria_id = $request->categoria;
+        $pago->user_id = auth()->user()->id;
 
         $pago->save();
 
-        return redirect()->route('home');
+        return redirect()->route('pagos.index');
     }
 
     /**
@@ -81,7 +88,9 @@ class PagoController extends Controller
      */
     public function edit(pago $pago)
     {
-        return view('gastos.editar')->with('pago', $pago);
+        $categorias = Categoria::get();
+        
+        return view('gastos.editar')->with('pago', $pago)->with('categorias', $categorias);
     }
 
     /**
@@ -103,7 +112,9 @@ class PagoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(pago $pago)
-    {
-        //
+    {   
+        $pago->delete();
+
+        return redirect()->back();
     }
 }

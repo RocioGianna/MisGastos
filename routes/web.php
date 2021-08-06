@@ -22,7 +22,11 @@ Route::get('/pagos/create', [App\Http\Controllers\PagoController::class, 'create
 
 Route::post('/pagos/store', [App\Http\Controllers\PagoController::class, 'store'])->name('pagos.store');
 
-Route::get('/pagos/{id}', [App\Http\Controllers\PagoController::class, 'edit'])->name('pagos.edit');
+Route::get('/pagos/{id}/edit', [App\Http\Controllers\PagoController::class, 'edit'])->name('pagos.edit');
+
+//Route::put('/pagos/{id}/edit', [App\Http\Controllers\PagoController::class, 'edit'])->name('pagos.edit');
+
+Route::delete('/pagos/{id}', [App\Http\Controllers\PagoController::class, 'destroy'])->name('pagos.delete');
 
 Auth::routes();
 
