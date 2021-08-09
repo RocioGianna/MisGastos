@@ -8,9 +8,9 @@
         "dest": "/api/index.php"
     }],
     "env": {
-        "APP_ENV": "production",
+        "APP_ENV": "Development",
         "APP_DEBUG": "flase",
-        "APP_URL": "https://yourproductionurl.com",
+        "APP_URL": "https://mis-gastos-two.vercel.app",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
