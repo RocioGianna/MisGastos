@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Carbon\Carbon;
 
-use App\Models\pago;
+use App\Models\Pago;
 use App\Models\user;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
@@ -66,16 +66,16 @@ class PagoController extends Controller
 
         $pago->save();
 
-        return redirect()->route('pagos.index');
+        return redirect()->route('home');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\pago  $pago
+     * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function show(pago $pago)
+    public function show( $pago)
     {
         //
     }
@@ -83,37 +83,53 @@ class PagoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\pago  $pago
+     * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function edit(pago $pago)
+    public function edit($pago)
     {
+        $registro = Pago::find($pago);
+
         $categorias = Categoria::get();
         
-        return view('gastos.editar')->with('pago', $pago)->with('categorias', $categorias);
+        return view('gastos.editar')->with('pago', $pago)->with('categorias', $categorias)->with('pago', $registro);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\pago  $pago
+     * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, pago $pago)
+    public function update(Request $request, $pago)
     {
-        //
+        $registro = Pago::find($pago);
+
+        $registro->gasto = $request->nombre_gasto;
+        $registro->descripcion = $request->descripcion;
+        $registro->precio = $request->monto;
+        $registro->pagado = $request->pagado;
+        $registro->fecha = $request->fecha;
+        $registro->categoria_id = $request->categoria;
+        $registro->user_id = auth()->user()->id;
+
+        $registro->save();
+
+        return redirect()->route('home');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\pago  $pago
+     * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function destroy(pago $pago)
+    public function destroy($pago)
     {   
-        $pago->delete();
+        $registro = Pago::find($pago);
+
+        $registro->delete();
 
         return redirect()->back();
     }

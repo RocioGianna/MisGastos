@@ -24,7 +24,7 @@ Route::post('/pagos/store', [App\Http\Controllers\PagoController::class, 'store'
 
 Route::get('/pagos/{id}/edit', [App\Http\Controllers\PagoController::class, 'edit'])->name('pagos.edit');
 
-//Route::put('/pagos/{id}/edit', [App\Http\Controllers\PagoController::class, 'edit'])->name('pagos.edit');
+Route::put('/pagos/{id}', [App\Http\Controllers\PagoController::class, 'update'])->name('pagos.update');
 
 Route::delete('/pagos/{id}', [App\Http\Controllers\PagoController::class, 'destroy'])->name('pagos.delete');
 

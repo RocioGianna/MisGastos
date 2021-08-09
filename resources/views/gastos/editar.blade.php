@@ -2,19 +2,21 @@
 
 @section('edit.form')
     <div class="row">
-        <form class="col s12" action="{{ route('pagos.store') }}" method="get">
+        <form class="col s12" action="{{ route('pagos.update', $pago->id) }}" method="post">
             @csrf
+            @method('put')
+
             <div class="container">
                 <div class="container">
                     <div class=" col s3">
                         <div class="input-group input-group-sm mb-3">
-                            <input placeholder="Ej. Luz, Gas..." class="form-control" name="nombre_gasto" type="text" value="" required>
+                            <input placeholder="Ej. Luz, Gas..." class="form-control" name="nombre_gasto" type="text" value="{{$pago->gasto}}" required>
                         </div>
                         <div class="mb-3">
-                            <textarea placeholder="Ej. regalo de cumpleaños.. (opcional)" class="form-control" rows="3" name="descripcion" class="materialize-textarea"></textarea>
+                            <textarea placeholder="Ej. regalo de cumpleaños.. (opcional)" class="form-control" rows="3" name="descripcion" class="materialize-textarea">{{$pago->descripcion}}</textarea>
                         </div>
                         <div class="input-group input-group-sm mb-3">
-                            <input class="form-control"  name="monto" placeholder="$" type="number" required>
+                            <input class="form-control"  name="monto" value="{{$pago->precio}}" placeholder="$" type="number" required>
                         </div>
                         
                         <div class="form-check">
@@ -26,7 +28,7 @@
                             <span>Pago aún no realizado</span>
                         </div>
         
-                        <input type="date"  name="fecha" required>
+                        <input type="date"  name="fecha" value="{{$pago->fecha}}" required>
                         <label for="fecha">Fecha de pago</label>
                             
                         <select class="form-select"  name="categoria" required>
@@ -36,7 +38,7 @@
                             @endforeach
                         </select>
 
-                        <a class="btn btn-outline-info" href=""><i class="material-icons">done</i></a>
+                        <button class="btn btn-outline-info" ><i class="material-icons">done</i></button>
                         <a class="btn btn-outline-info" href="{{ route('pagos.index') }}"><i class="material-icons">clear</i></a>
                     </div>
                 </div>
