@@ -28,6 +28,8 @@ Route::put('/pagos/{id}', [App\Http\Controllers\PagoController::class, 'update']
 
 Route::delete('/pagos/{id}', [App\Http\Controllers\PagoController::class, 'destroy'])->name('pagos.delete');
 
+Route::put('/pagos/{id}/editEstado', [App\Http\Controllers\PagoController::class,'updateEstado'])->name('pagos.estado');
+
 Auth::routes();
 
 

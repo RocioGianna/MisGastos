@@ -27,9 +27,9 @@
                             <input class="form-check-input" name="pagado" type="radio"  value="1" required />
                             <span>Pago aún no realizado</span>
                         </div>
-        
-                        <input type="date"  name="fecha" value="{{$pago->fecha}}" required>
+                        
                         <label for="fecha">Fecha de pago</label>
+                        <input type="date"  name="fecha" value="{{$pago->fecha}}" required>
                             
                         <select class="form-select"  name="categoria" required>
                             <option value="" disabled selected>Selecciona una categoria</option>

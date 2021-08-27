@@ -118,6 +118,26 @@ class PagoController extends Controller
 
         return redirect()->route('home');
     }
+    /**
+     * Update de estado pago o no pago
+     */
+    public function updateEstado($pago)
+    {
+        $registro = Pago::find($pago);
+        $estado;
+        
+        if ($registro->pagado == 0) {
+            $estado = 1;
+        }else{
+            $estado = 0;
+        }
+
+        $registro->pagado = $estado;
+
+        $registro->save();
+
+        return redirect()->back();
+    }
 
     /**
      * Remove the specified resource from storage.
